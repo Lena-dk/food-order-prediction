@@ -26,8 +26,8 @@ st.set_page_config(
 st.title("🍔 Food Order Prediction System")
 
 st.write("""
-This application predicts whether a user is likely to order food online 
-using a **Decision Tree Machine Learning Model**.
+This application predicts whether a user is likely to order food online
+using a Decision Tree Machine Learning Model.
 """)
 
 st.markdown("---")
@@ -90,7 +90,7 @@ income_map = {
 
 income_val = income_map[income]
 
-# Orders per week
+# Orders Per Week
 orders = st.selectbox(
     "Orders Per Week",
     ["0", "1-2", "3-5", "More than 5"]
@@ -105,7 +105,7 @@ orders_map = {
 
 orders_val = orders_map[orders]
 
-# Discounts
+# Discount Influence
 discount = st.slider(
     "Discount Influence (1 = Always, 5 = Rarely)",
     1, 5, 3
@@ -161,27 +161,79 @@ peak_map = {
 peak_val = peak_map[peak]
 
 # =========================
+# Delivery App
+# =========================
+app_used = st.selectbox(
+    "Delivery App Used Most Often",
+    ["Chefz", "HungerStation", "Jahez", "Keeta", "Ninja", "Other"]
+)
+
+app_chefz = 1 if app_used == "Chefz" else 0
+app_hunger = 1 if app_used == "HungerStation" else 0
+app_jahez = 1 if app_used == "Jahez" else 0
+app_keeta = 1 if app_used == "Keeta" else 0
+app_ninja = 1 if app_used == "Ninja" else 0
+app_other = 1 if app_used == "Other" else 0
+
+# =========================
+# Region
+# =========================
+region = st.selectbox(
+    "Region",
+    ["Riyadh", "Jeddah", "Dammam", "Madinah", "Qassim", "Tabuk", "Other"]
+)
+
+region_dammam = 1 if region == "Dammam" else 0
+region_jeddah = 1 if region == "Jeddah" else 0
+region_madinah = 1 if region == "Madinah" else 0
+region_other = 1 if region == "Other" else 0
+region_qassim = 1 if region == "Qassim" else 0
+region_riyadh = 1 if region == "Riyadh" else 0
+region_tabuk = 1 if region == "Tabuk" else 0
+
+# =========================
 # Prediction
 # =========================
 st.markdown("---")
 
-if st.button("Predict", use_container_width=True):
+if st.button("Predict 🔮", use_container_width=True):
+
+    # IMPORTANT:
+    # Must match training feature order exactly
 
     features = np.array([[
-    gender_val, age_val, student_val, income_val, orders_val,
-    discount, fee_val, ratings_val, reorder, peak_val,
-    app_chefz, app_hunger, app_jahez, app_keeta, app_ninja, app_other,
-    region_dammam, region_jeddah, region_madinah, region_other,
-    region_qassim, region_riyadh, region_tabuk
-]])
+        gender_val,
+        age_val,
+        student_val,
+        income_val,
+        orders_val,
+        discount,
+        fee_val,
+        ratings_val,
+        reorder,
+        peak_val,
+        app_chefz,
+        app_hunger,
+        app_jahez,
+        app_keeta,
+        app_ninja,
+        app_other,
+        region_dammam,
+        region_jeddah,
+        region_madinah,
+        region_other,
+        region_qassim,
+        region_riyadh,
+        region_tabuk
+    ]])
 
-    # Scale input
+    # Scale Features
     scaled_features = scaler.transform(features)
 
     # Prediction
     prediction = model.predict(scaled_features)[0]
 
-    # Probability
+    # Probabilities
     probabilities = model.predict_proba(scaled_features)[0]
 
     st.markdown("---")
