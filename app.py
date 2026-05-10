@@ -3,10 +3,10 @@ import numpy as np
 import pickle
 
 # Load the saved model and scaler
-with open('food_order_model.pkl', 'dt') as f:
+with open('food_order_model.pkl', 'wb') as f:
     model = pickle.load(f)
 
-with open('scaler.pkl', 'dt') as f:
+with open('scaler.pkl', 'wb') as f:
     scaler = pickle.load(f)
 
 # Page configuration
