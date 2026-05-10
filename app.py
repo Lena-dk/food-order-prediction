@@ -168,17 +168,12 @@ st.markdown("---")
 if st.button("Predict", use_container_width=True):
 
     features = np.array([[
-        gender_val,
-        age_val,
-        student_val,
-        income_val,
-        orders_val,
-        discount,
-        fee_val,
-        ratings_val,
-        reorder,
-        peak_val
-    ]])
+    gender_val, age_val, student_val, income_val, orders_val,
+    discount, fee_val, ratings_val, reorder, peak_val,
+    app_chefz, app_hunger, app_jahez, app_keeta, app_ninja, app_other,
+    region_dammam, region_jeddah, region_madinah, region_other,
+    region_qassim, region_riyadh, region_tabuk
+]])
 
     # Scale input
     scaled_features = scaler.transform(features)
